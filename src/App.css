@@ -123,15 +123,15 @@ body {
 }
 .section-title {
   font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-  padding-top: 4px;
+  font-weight: 800;
+  color: #000000;
   border-top: 1px solid var(--border);
   padding-top: 16px;
 }
 h2 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 800;
+  color: #000000;
 }
 
 /* TAB BUTTONS */

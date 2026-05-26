@@ -8,41 +8,41 @@ import './App.css';
 // ── DATA (단위: 백만원) ──────────────────────────────────
 const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 
-const google24 = [210,230,280,320,350,380,400,390,360,340,320,380];
-const meta24   = [120,130,150,180,200,220,230,220,200,190,180,210];
 const google25 = [240,260,310,350,380,420,440,410,390,360,340,400];
 const meta25   = [140,150,180,210,230,250,260,240,220,200,195,235];
-const rev24    = [1250,1380,1620,1850,2030,2210,2350,2280,2100,1980,1860,2240];
+const google26 = [265,285,340,385,420,460,480,450,425,395,370,435];
+const meta26   = [155,168,200,235,258,278,290,268,248,222,215,260];
 const rev25    = [1420,1560,1880,2120,2350,2580,2700,2560,2380,2180,2050,2480];
+const rev26    = [1580,1740,2090,2360,2620,2870,3010,2850,2650,2430,2280,2760];
 
-const spend24 = months.map((_, i) => google24[i] + meta24[i]);
 const spend25 = months.map((_, i) => google25[i] + meta25[i]);
-const roas24  = rev24.map((r, i) => parseFloat((r / spend24[i]).toFixed(2)));
+const spend26 = months.map((_, i) => google26[i] + meta26[i]);
 const roas25  = rev25.map((r, i) => parseFloat((r / spend25[i]).toFixed(2)));
-const roi24   = rev24.map((r, i) => parseFloat(((r - spend24[i]) / spend24[i] * 100).toFixed(1)));
+const roas26  = rev26.map((r, i) => parseFloat((r / spend26[i]).toFixed(2)));
 const roi25   = rev25.map((r, i) => parseFloat(((r - spend25[i]) / spend25[i] * 100).toFixed(1)));
+const roi26   = rev26.map((r, i) => parseFloat(((r - spend26[i]) / spend26[i] * 100).toFixed(1)));
 
-const totSpend24 = spend24.reduce((a, b) => a + b, 0);
 const totSpend25 = spend25.reduce((a, b) => a + b, 0);
-const totRev24   = rev24.reduce((a, b) => a + b, 0);
+const totSpend26 = spend26.reduce((a, b) => a + b, 0);
 const totRev25   = rev25.reduce((a, b) => a + b, 0);
-const totROAS25  = parseFloat((totRev25 / totSpend25).toFixed(2));
-const totROI25   = parseFloat(((totRev25 - totSpend25) / totSpend25 * 100).toFixed(1));
-const costRate24 = parseFloat((totSpend24 / totRev24 * 100).toFixed(1));
+const totRev26   = rev26.reduce((a, b) => a + b, 0);
+const totROAS26  = parseFloat((totRev26 / totSpend26).toFixed(2));
+const totROI26   = parseFloat(((totRev26 - totSpend26) / totSpend26 * 100).toFixed(1));
 const costRate25 = parseFloat((totSpend25 / totRev25 * 100).toFixed(1));
-const spendYoY   = parseFloat(((totSpend25 - totSpend24) / totSpend24 * 100).toFixed(1));
-const revYoY     = parseFloat(((totRev25 - totRev24) / totRev24 * 100).toFixed(1));
-const totGoogle25 = google25.reduce((a, b) => a + b, 0);
-const totMeta25   = meta25.reduce((a, b) => a + b, 0);
+const costRate26 = parseFloat((totSpend26 / totRev26 * 100).toFixed(1));
+const spendYoY   = parseFloat(((totSpend26 - totSpend25) / totSpend25 * 100).toFixed(1));
+const revYoY     = parseFloat(((totRev26 - totRev25) / totRev25 * 100).toFixed(1));
+const totGoogle26 = google26.reduce((a, b) => a + b, 0);
+const totMeta26   = meta26.reduce((a, b) => a + b, 0);
 
 const monthlyData = months.map((m, i) => ({
   month: m,
-  google24: google24[i], meta24: meta24[i],
   google25: google25[i], meta25: meta25[i],
-  spend24: spend24[i],   spend25: spend25[i],
-  rev24: rev24[i],       rev25: rev25[i],
-  roas24: roas24[i],     roas25: roas25[i],
-  roi24: roi24[i],       roi25: roi25[i],
+  google26: google26[i], meta26: meta26[i],
+  spend25: spend25[i],   spend26: spend26[i],
+  rev25: rev25[i],       rev26: rev26[i],
+  roas25: roas25[i],     roas26: roas26[i],
+  roi25: roi25[i],       roi26: roi26[i],
 }));
 
 // Brand data
@@ -97,18 +97,18 @@ export default function App() {
       <div className="header">
         <div>
           <h1>SEM 광고비 분석 대시보드</h1>
-          <p className="sub">구글 · 메타 | 2024 전년대비 2025 | 브랜드별 ROI / ROAS 비교</p>
+          <p className="sub">구글 · 메타 | 2025 전년대비 2026 | 브랜드별 ROI / ROAS 비교</p>
         </div>
-        <div className="badge">샘플 데이터 · 단위: 백만원</div>
+        <div className="badge">샘플 데이터 · 단위: 백만원 · 2026 연간</div>
       </div>
 
       {/* ── KPI STRIP ── */}
       <div className="kpi-grid">
-        <KPI label="2025 총 광고비"    value={fmt(totSpend25)} />
-        <KPI label="2025 귀속 매출"    value={fmt(totRev25)}   color="#34a853" />
-        <KPI label="ROAS (2025)"       value={`${totROAS25}x`} color="#4285F4" />
-        <KPI label="ROI (2025)"        value={`${totROI25}%`}  color="#34a853" />
-        <KPI label="비용율 (광고비÷매출)" value={`${costRate25}%`} sub={`전년 ${costRate24}%`} />
+        <KPI label="2026 총 광고비"    value={fmt(totSpend26)} />
+        <KPI label="2026 귀속 매출"    value={fmt(totRev26)}   color="#34a853" />
+        <KPI label="ROAS (2026)"       value={`${totROAS26}x`} color="#4285F4" />
+        <KPI label="ROI (2026)"        value={`${totROI26}%`}  color="#34a853" />
+        <KPI label="비용율 (광고비÷매출)" value={`${costRate26}%`} sub={`전년 ${costRate25}%`} />
         <KPI label="광고비 YoY"        value={`+${spendYoY}%`} color="#f4a320"
           sub={`매출 YoY +${revYoY}%`} />
       </div>
@@ -116,16 +116,16 @@ export default function App() {
       {/* ── YoY SUMMARY ── */}
       <div className="callout-grid">
         <div className="callout callout-blue">
-          <strong>2025 vs 2024 광고비</strong>
-          <span>전년 {fmt(totSpend24)} → 올해 {fmt(totSpend25)} (+{spendYoY}%)
-          · 구글 {Math.round(totGoogle25 / (totGoogle25 + totMeta25) * 100)}%
-          / 메타 {Math.round(totMeta25 / (totGoogle25 + totMeta25) * 100)}%</span>
+          <strong>2026 vs 2025 광고비</strong>
+          <span>전년 {fmt(totSpend25)} → 올해 {fmt(totSpend26)} (+{spendYoY}%)
+          · 구글 {Math.round(totGoogle26 / (totGoogle26 + totMeta26) * 100)}%
+          / 메타 {Math.round(totMeta26 / (totGoogle26 + totMeta26) * 100)}%</span>
         </div>
         <div className="callout callout-green">
-          <strong>2025 vs 2024 귀속 매출</strong>
-          <span>전년 {fmt(totRev24)} → 올해 {fmt(totRev25)} (+{revYoY}%)
-          · ROAS {parseFloat((totRev24 / totSpend24).toFixed(2))}x → {totROAS25}x
-          / 비용율 {costRate24}% → {costRate25}%</span>
+          <strong>2026 vs 2025 귀속 매출</strong>
+          <span>전년 {fmt(totRev25)} → 올해 {fmt(totRev26)} (+{revYoY}%)
+          · ROAS {parseFloat((totRev25 / totSpend25).toFixed(2))}x → {totROAS26}x
+          / 비용율 {costRate25}% → {costRate26}%</span>
         </div>
       </div>
 
@@ -156,13 +156,13 @@ export default function App() {
                 <YAxis tick={{ fontSize: 11 }} unit="M" />
                 <Tooltip formatter={(v) => [`${v}M`, '']} />
                 <Legend />
-                <Bar dataKey="google24" name="구글 2024" stackId="a" fill={COLORS.google24} />
-                <Bar dataKey="meta24"   name="메타 2024" stackId="a" fill={COLORS.meta24} />
-                <Bar dataKey="google25" name="구글 2025" stackId="b" fill={COLORS.google25} />
-                <Bar dataKey="meta25"   name="메타 2025" stackId="b" fill={COLORS.meta25} />
+                <Bar dataKey="google25" name="구글 2025" stackId="a" fill={COLORS.google24} />
+                <Bar dataKey="meta25"   name="메타 2025" stackId="a" fill={COLORS.meta24} />
+                <Bar dataKey="google26" name="구글 2026" stackId="b" fill={COLORS.google25} />
+                <Bar dataKey="meta26"   name="메타 2026" stackId="b" fill={COLORS.meta25} />
               </BarChart>
             </ResponsiveContainer>
-            <p className="chart-caption">Source: 구글 애즈 · 메타 비즈니스 · 2024–2025 연간</p>
+            <p className="chart-caption">Source: 구글 애즈 · 메타 비즈니스 · 2025–2026 연간</p>
           </div>
           <div className="chart-block">
             <h3>채널 믹스 구성비 (2025 연간)</h3>
@@ -170,8 +170,8 @@ export default function App() {
               <PieChart>
                 <Pie
                   data={[
-                    { name: '구글', value: totGoogle25 },
-                    { name: '메타',  value: totMeta25 },
+                    { name: '구글', value: totGoogle26 },
+                    { name: '메타',  value: totMeta26 },
                   ]}
                   cx="50%" cy="50%" innerRadius={70} outerRadius={110}
                   dataKey="value" label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
@@ -183,7 +183,7 @@ export default function App() {
               </PieChart>
             </ResponsiveContainer>
             <p className="chart-caption">
-              구글 {totGoogle25.toLocaleString()}M · 메타 {totMeta25.toLocaleString()}M
+              구글 {totGoogle26.toLocaleString()}M · 메타 {totMeta26.toLocaleString()}M
             </p>
           </div>
         </div>
@@ -199,8 +199,8 @@ export default function App() {
               <YAxis tick={{ fontSize: 11 }} domain={['auto','auto']} />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="roas24" name="ROAS 2024" stroke={COLORS.roas24} strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="roas25" name="ROAS 2025" stroke={COLORS.roas25} strokeWidth={2.5} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="roas25" name="ROAS 2025" stroke={COLORS.roas24} strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="roas26" name="ROAS 2026" stroke={COLORS.roas25} strokeWidth={2.5} dot={{ r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
           <p className="chart-caption">ROAS = 귀속매출 / (구글+메타 광고비)</p>
@@ -217,8 +217,8 @@ export default function App() {
               <YAxis tick={{ fontSize: 11 }} unit="%" />
               <Tooltip formatter={(v) => [`${v}%`, '']} />
               <Legend />
-              <Line type="monotone" dataKey="roi24" name="ROI 2024" stroke={COLORS.roi24} strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="roi25" name="ROI 2025" stroke={COLORS.roi25} strokeWidth={2.5} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="roi25" name="ROI 2025" stroke={COLORS.roi24} strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="roi26" name="ROI 2026" stroke={COLORS.roi25} strokeWidth={2.5} dot={{ r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
           <p className="chart-caption">ROI = (귀속매출 − 광고비) / 광고비 × 100</p>
@@ -226,7 +226,7 @@ export default function App() {
       )}
 
       {/* ── YoY BAR COMPARISON ── */}
-      <h2 className="section-title">전년대비 절대값 비교 (2024 vs 2025)</h2>
+      <h2 className="section-title">전년대비 절대값 비교 (2025 vs 2026)</h2>
       <div className="chart-grid-2">
         <div className="chart-block">
           <h3>총 광고비 월별 YoY</h3>
@@ -237,8 +237,8 @@ export default function App() {
               <YAxis tick={{ fontSize: 11 }} unit="M" />
               <Tooltip formatter={(v) => [`${v}M`, '']} />
               <Legend />
-              <Bar dataKey="spend24" name="2024 광고비" fill={COLORS.spend24} />
-              <Bar dataKey="spend25" name="2025 광고비" fill={COLORS.spend25} />
+              <Bar dataKey="spend25" name="2025 광고비" fill={COLORS.spend24} />
+              <Bar dataKey="spend26" name="2026 광고비" fill={COLORS.spend25} />
             </BarChart>
           </ResponsiveContainer>
           <p className="chart-caption">단위: 백만원 · 구글+메타 합산</p>
@@ -252,8 +252,8 @@ export default function App() {
               <YAxis tick={{ fontSize: 11 }} unit="M" />
               <Tooltip formatter={(v) => [`${v}M`, '']} />
               <Legend />
-              <Bar dataKey="rev24" name="2024 매출" fill={COLORS.rev24} />
-              <Bar dataKey="rev25" name="2025 매출" fill={COLORS.rev25} />
+              <Bar dataKey="rev25" name="2025 매출" fill={COLORS.rev24} />
+              <Bar dataKey="rev26" name="2026 매출" fill={COLORS.rev25} />
             </BarChart>
           </ResponsiveContainer>
           <p className="chart-caption">단위: 백만원 · SEM 귀속 매출 기준</p>
@@ -261,7 +261,7 @@ export default function App() {
       </div>
 
       {/* ── BRAND COMPARISON ── */}
-      <h2 className="section-title">브랜드별 SEM 성과 비교 (2025 연간)</h2>
+      <h2 className="section-title">브랜드별 SEM 성과 비교 (2026 연간)</h2>
       <div className="chart-grid-2">
         <div className="chart-block">
           <h3>브랜드별 광고비 vs 귀속 매출</h3>
@@ -298,7 +298,7 @@ export default function App() {
       </div>
 
       {/* ── MONTHLY TABLE ── */}
-      <h2 className="section-title">월별 상세 현황 (2025)</h2>
+      <h2 className="section-title">월별 상세 현황 (2026)</h2>
       <div className="table-wrap">
         <table>
           <thead>
@@ -310,19 +310,19 @@ export default function App() {
           </thead>
           <tbody>
             {months.map((m, i) => {
-              const s = spend25[i], r = rev25[i];
+              const s = spend26[i], r = rev26[i];
               const cr  = parseFloat((s / r * 100).toFixed(1));
-              const sYoY = ((s - spend24[i]) / spend24[i] * 100).toFixed(1);
-              const rYoY = ((r - rev24[i])   / rev24[i]   * 100).toFixed(1);
+              const sYoY = ((s - spend25[i]) / spend25[i] * 100).toFixed(1);
+              const rYoY = ((r - rev25[i])   / rev25[i]   * 100).toFixed(1);
               return (
                 <tr key={m}>
                   <td>{m}</td>
-                  <td className="num">{google25[i].toLocaleString()}</td>
-                  <td className="num">{meta25[i].toLocaleString()}</td>
+                  <td className="num">{google26[i].toLocaleString()}</td>
+                  <td className="num">{meta26[i].toLocaleString()}</td>
                   <td className="num">{s.toLocaleString()}</td>
                   <td className="num">{r.toLocaleString()}</td>
-                  <td className="num">{roas25[i]}x</td>
-                  <td className="num">{roi25[i]}%</td>
+                  <td className="num">{roas26[i]}x</td>
+                  <td className="num">{roi26[i]}%</td>
                   <td className="num">{cr}%</td>
                   <td className="num yoy">+{sYoY}%</td>
                   <td className="num yoy-g">+{rYoY}%</td>
@@ -334,7 +334,7 @@ export default function App() {
       </div>
 
       {/* ── BRAND TABLE ── */}
-      <h2 className="section-title">브랜드별 상세 (2025 연간)</h2>
+      <h2 className="section-title">브랜드별 상세 (2026 연간)</h2>
       <div className="table-wrap">
         <table>
           <thead>

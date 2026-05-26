@@ -154,7 +154,7 @@ export default function App() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} unit="M" />
-                <Tooltip formatter={(v: number) => [`${v}M`, '']} />
+                <Tooltip formatter={(v) => [`${v}M`, '']} />
                 <Legend />
                 <Bar dataKey="google24" name="구글 2024" stackId="a" fill={COLORS.google24} />
                 <Bar dataKey="meta24"   name="메타 2024" stackId="a" fill={COLORS.meta24} />
@@ -174,12 +174,12 @@ export default function App() {
                     { name: '메타',  value: totMeta25 },
                   ]}
                   cx="50%" cy="50%" innerRadius={70} outerRadius={110}
-                  dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  dataKey="value" label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                 >
                   <Cell fill={COLORS.google25} />
                   <Cell fill={COLORS.meta25} />
                 </Pie>
-                <Tooltip formatter={(v: number) => [`${v.toLocaleString()}M`]} />
+                <Tooltip formatter={(v) => [`${Number(v).toLocaleString()}M`]} />
               </PieChart>
             </ResponsiveContainer>
             <p className="chart-caption">
@@ -215,7 +215,7 @@ export default function App() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} unit="%" />
-              <Tooltip formatter={(v: number) => [`${v}%`, '']} />
+              <Tooltip formatter={(v) => [`${v}%`, '']} />
               <Legend />
               <Line type="monotone" dataKey="roi24" name="ROI 2024" stroke={COLORS.roi24} strokeWidth={2} dot={false} />
               <Line type="monotone" dataKey="roi25" name="ROI 2025" stroke={COLORS.roi25} strokeWidth={2.5} dot={{ r: 3 }} />
@@ -235,7 +235,7 @@ export default function App() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} unit="M" />
-              <Tooltip formatter={(v: number) => [`${v}M`, '']} />
+              <Tooltip formatter={(v) => [`${v}M`, '']} />
               <Legend />
               <Bar dataKey="spend24" name="2024 광고비" fill={COLORS.spend24} />
               <Bar dataKey="spend25" name="2025 광고비" fill={COLORS.spend25} />
@@ -250,7 +250,7 @@ export default function App() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} unit="M" />
-              <Tooltip formatter={(v: number) => [`${v}M`, '']} />
+              <Tooltip formatter={(v) => [`${v}M`, '']} />
               <Legend />
               <Bar dataKey="rev24" name="2024 매출" fill={COLORS.rev24} />
               <Bar dataKey="rev25" name="2025 매출" fill={COLORS.rev25} />
@@ -270,7 +270,7 @@ export default function App() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis type="number" tick={{ fontSize: 11 }} unit="M" />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} />
-              <Tooltip formatter={(v: number) => [`${v.toLocaleString()}M`, '']} />
+              <Tooltip formatter={(v) => [`${Number(v).toLocaleString()}M`, '']} />
               <Legend />
               <Bar dataKey="spend" name="광고비"    fill={COLORS.meta25} />
               <Bar dataKey="rev"   name="귀속매출" fill={COLORS.rev25} />
@@ -285,7 +285,7 @@ export default function App() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis type="number" tick={{ fontSize: 11 }} domain={[0, 7]} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} />
-              <Tooltip formatter={(v: number) => [`${v}x`, 'ROAS']} />
+              <Tooltip formatter={(v) => [`${v}x`, 'ROAS']} />
               <Bar dataKey="roas" name="ROAS" fill={COLORS.google25}>
                 {brands.map((b) => (
                   <Cell key={b.name} fill={b.roas >= 5.5 ? '#34a853' : b.roas < 4.5 ? '#f4a320' : COLORS.google25} />
